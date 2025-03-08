@@ -12,6 +12,7 @@
         "@emotion/styled": "^11.14.0",
         "@mui/material": "^6.4.7",
         "next": "latest",
+        "pg": "^8.13.3",
         "react": "latest",
         "react-dom": "latest"
     },
