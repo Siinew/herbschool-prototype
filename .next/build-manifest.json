@@ -13,11 +13,6 @@
   "rootMainFiles": [],
   "rootMainFilesTree": {},
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -30,6 +25,12 @@
     ],
     "/clinic": [
       "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/clinic.js"
+    ]
+  },
+  "ampFirstPages": []
+}nks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/clinic.js"
     ]
