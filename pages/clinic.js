@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import axios from "axios";
+
 
 export default function Clinic() {
   const [mentors, setMentors] = useState([]);
@@ -12,62 +12,80 @@ export default function Clinic() {
         const response = await axios.get("/api/getMentors");
         setMentors(response.data);
       } catch (error) {
-        console.error("Failed to fetch mentors:", error);
+        console.error("Error fetching mentors:", error);
       }
     };
 
     fetchMentors();
   }, []);
 
-  return (
-    <div className="p-5 text-center">
-      <h1 className="text-2xl font-bold mb-6">Welcome to our Herbal Clinic!</h1>
+  const handleSelectMentor = (mentor) => {
+    setSelectedMentor(mentor);
+  };
 
-      <table className="mx-auto">
-        <tbody>
-          <tr>
-            {mentors.map((mentor) => (
-              <td key={mentor.id} className="p-4 text-center">
-                <Image
-                  src={mentor.image_url}
-                  alt={mentor.name}
-                  width={200}   // Adjust image size here
-                  height={250}  // Adjust image height here
-                  className="rounded-lg shadow-md"
-                />
-              </td>
-            ))}
-          </tr>
-          <tr>
-            {mentors.map((mentor) => (
-              <td key={mentor.id} className="p-2">
-                <button
-                  onClick={() => setSelectedMentor(mentor)}
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                >
-                  Select {mentor.name}
-                </button>
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+  return (
+    <div className="p-4">
+      <h1 className="text-3xl font-bold text-center mb-6">
+        Welcome to our Herbal Clinic!
+      </h1>
+
+      {mentors.length === 0 ? (
+        <p>No mentors available at the moment.</p>
+      ) : (
+        <table className="w-full text-center">
+          <tbody>
+            <tr>
+              {mentors.map((mentor) => (
+                <td key={mentor.id}>
+                  <img
+                    src={`/${mentor.image_url}`}
+                    alt={mentor.name}
+                    className="w-40 h-40 object-cover rounded shadow-lg mx-auto"
+                  />
+                </td>
+              ))}
+            </tr>
+            <tr>
+              {mentors.map((mentor) => (
+                <td key={mentor.id} className="pt-2 text-lg font-semibold">
+                  {mentor.name}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              {mentors.map((mentor) => (
+                <td key={mentor.id} className="pb-2 italic text-gray-600">
+                  {mentor.talents}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              {mentors.map((mentor) => (
+                <td key={mentor.id}>
+                  <button
+                    onClick={() => handleSelectMentor(mentor)}
+                    className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
+                  >
+                    Select {mentor.name}
+                  </button>
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      )}
 
       {selectedMentor && (
-        <div className="mt-6">
-          <p>
-            You selected <strong>{selectedMentor.name}</strong>! Get ready to start your case!
-          </p>
+        <div className="text-center mt-6 text-xl font-semibold">
+          You selected {selectedMentor.name}! Get ready to start your case!
         </div>
       )}
 
       <div className="mt-8">
-        <Image
+        <img
           src="/herbal_clinic_waiting_room.png"
-          alt="Clinic Waiting Room"
-          width={800}   // Resize waiting room image if necessary
-          height={400}
-          className="rounded-lg shadow-lg mx-auto"
+          alt="Herbal Clinic Waiting Room"
+          className="w-full h-auto object-cover rounded shadow-lg"
         />
       </div>
     </div>
