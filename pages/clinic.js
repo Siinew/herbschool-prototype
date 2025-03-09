@@ -40,7 +40,9 @@ export default function Clinic() {
                   <img
                     src={`/${mentor.image_url}`}
                     alt={mentor.name}
-                    className="w-40 h-40 object-cover rounded shadow-lg mx-auto"
+                    width={200}   // Adjust image size here
+                  height={250}  // Adjust image height here
+                  className="rounded-lg shadow-md"
                   />
                 </td>
               ))}
