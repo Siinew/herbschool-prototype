@@ -13,10 +13,10 @@ export default function Clinic() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       {/* Heading */}
-      <h1 className="text-3xl font-bold mb-6">Welcome to the Clinic, please pick a Mentor to work with</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Welcome to the Clinic, please pick a Mentor to work with</h1>
 
       {/* Mentor Selection Section */}
-      <div className="grid grid-cols-3 gap-8 mb-6">
+      <div className="flex flex-row justify-center space-x-10 mb-6">
         {mentors.map((mentor) => (
           <div key={mentor.id} className="flex flex-col items-center">
             <Image
@@ -37,7 +37,7 @@ export default function Clinic() {
       </div>
 
       {/* Clinic Waiting Room Background */}
-      <div className="relative w-full flex justify-center">
+      <div className="w-full flex justify-center">
         <Image
           src="/herbal_clinic_waiting_room.png"
           alt="Herbal Clinic Waiting Room"
