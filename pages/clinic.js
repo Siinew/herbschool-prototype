@@ -11,14 +11,15 @@ export default function Clinic() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6 space-y-6">
       {/* Heading */}
-      <h1 className="text-3xl font-bold mb-6 text-center">Welcome to our Herbal Clinic!</h1>
+      <h1 className="text-3xl font-bold text-center">Welcome to our Herbal Clinic!</h1>
 
-      {/* Mentor Images (Row Layout) */}
-      <div className="flex justify-center space-x-10 mb-4">
+      {/* Mentor Selection Grid */}
+      <div className="grid grid-cols-3 gap-6 w-full max-w-5xl">
         {mentors.map((mentor) => (
           <div key={mentor.id} className="flex flex-col items-center">
+            {/* Mentor Image */}
             <Image
               src={mentor.image}
               alt={mentor.name}
@@ -26,27 +27,23 @@ export default function Clinic() {
               height={200}
               className="rounded-lg shadow-lg"
             />
+            {/* Mentor Name */}
+            <p className="mt-2 text-lg font-semibold">{mentor.name}</p>
+            {/* Select Button */}
+            <button
+              onClick={() => setSelectedMentor(mentor)}
+              className="mt-2 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            >
+              Select {mentor.name}
+            </button>
           </div>
         ))}
       </div>
 
-      {/* Mentor Selection Buttons (Row Layout) */}
-      <div className="flex justify-center space-x-10 mb-6">
-        {mentors.map((mentor) => (
-          <button
-            key={mentor.id}
-            onClick={() => setSelectedMentor(mentor)}
-            className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-          >
-            Select {mentor.name}
-          </button>
-        ))}
-      </div>
-
-      {/* Mentor Selection Response Text */}
-      <div className="mb-6">
+      {/* Mentor Selection Response */}
+      <div className="mt-4 text-center">
         {selectedMentor ? (
-          <p className="text-lg font-semibold text-center">
+          <p className="text-lg font-semibold">
             You selected <span className="font-bold">{selectedMentor.name}</span>! Get ready to start your case!
           </p>
         ) : (
@@ -54,7 +51,7 @@ export default function Clinic() {
         )}
       </div>
 
-      {/* Clinic Waiting Room Background */}
+      {/* Clinic Waiting Room Image */}
       <div className="w-full flex justify-center">
         <Image
           src="/herbal_clinic_waiting_room.png"
