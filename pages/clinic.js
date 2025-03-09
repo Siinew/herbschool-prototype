@@ -1,70 +1,73 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import axios from "axios";
 
-export default function ClinicMentorUI() {
+export default function Clinic() {
   const [mentors, setMentors] = useState([]);
   const [selectedMentor, setSelectedMentor] = useState(null);
 
   useEffect(() => {
-    async function fetchMentors() {
+    const fetchMentors = async () => {
       try {
-        const response = await fetch("/api/getMentors");
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          setMentors(data);
-        } else {
-          console.error("API did not return an array:", data);
-        }
+        const response = await axios.get("/api/getMentors");
+        setMentors(response.data);
       } catch (error) {
-        console.error("Error fetching mentors:", error);
+        console.error("Failed to fetch mentors:", error);
       }
-    }
+    };
 
     fetchMentors();
   }, []);
 
   return (
-    <div className="flex flex-col items-center p-6">
+    <div className="p-5 text-center">
       <h1 className="text-2xl font-bold mb-6">Welcome to our Herbal Clinic!</h1>
 
-      {/* Mentor Selection */}
-      <div className="grid grid-cols-4 gap-6 mb-6">
-        {mentors.length > 0 ? (
-          mentors.map((mentor) => (
-            <div key={mentor.id} className="flex flex-col items-center">
-              <img
-                src={mentor.image_url}
-                alt={mentor.name}
-                className="w-40 h-40 object-cover rounded-md shadow-md"
-              />
-              <h2 className="mt-2 font-semibold text-lg">{mentor.name}</h2>
-              <p className="text-sm text-gray-600">{mentor.talents}</p>
-              <button
-                onClick={() => setSelectedMentor(mentor)}
-                className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
-              >
-                Select {mentor.name}
-              </button>
-            </div>
-          ))
-        ) : (
-          <p>No mentors available.</p>
-        )}
-      </div>
+      <table className="mx-auto">
+        <tbody>
+          <tr>
+            {mentors.map((mentor) => (
+              <td key={mentor.id} className="p-4 text-center">
+                <Image
+                  src={mentor.image_url}
+                  alt={mentor.name}
+                  width={200}   // Adjust image size here
+                  height={250}  // Adjust image height here
+                  className="rounded-lg shadow-md"
+                />
+              </td>
+            ))}
+          </tr>
+          <tr>
+            {mentors.map((mentor) => (
+              <td key={mentor.id} className="p-2">
+                <button
+                  onClick={() => setSelectedMentor(mentor)}
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Select {mentor.name}
+                </button>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
 
-      {/* Display Selected Mentor */}
       {selectedMentor && (
-        <div className="mt-6 text-lg font-semibold text-center">
-          You selected <span className="text-green-600">{selectedMentor.name}</span>!
-          Get ready to start your case!
+        <div className="mt-6">
+          <p>
+            You selected <strong>{selectedMentor.name}</strong>! Get ready to start your case!
+          </p>
         </div>
       )}
 
-      {/* Clinic Waiting Room Image */}
-      <div className="mt-6">
-        <img
+      <div className="mt-8">
+        <Image
           src="/herbal_clinic_waiting_room.png"
           alt="Clinic Waiting Room"
-          className="w-full max-w-4xl rounded-md shadow-lg"
+          width={800}   // Resize waiting room image if necessary
+          height={400}
+          className="rounded-lg shadow-lg mx-auto"
         />
       </div>
     </div>
